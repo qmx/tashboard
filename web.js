@@ -24,8 +24,9 @@ app.post('/status', function(req, res) {
         var key = 'tashboard:statuses:' + repo;
         var url = payload.build_url;
         var statusMessage = payload.status_message;
+        var finishedAt = payload.finished_at;
         var status = payload.status;
-        client.hmset(key, {url:url, status:status, statusMessage:statusMessage}, function (err, reply) {
+        client.hmset(key, {url:url, status:status, statusMessage:statusMessage, finishedAt:finishedAt}, function (err, reply) {
             if(!err) {
                 res.send(200);
             } else {
