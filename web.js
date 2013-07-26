@@ -9,7 +9,7 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 
 app.post('/status', function(req, res) {
-    if (request.headers.authorization === process.env.TRAVIS_AUTH_TOKEN) {
+    if (req.headers.authorization === process.env.TRAVIS_AUTH_TOKEN) {
         console.log(req.body);
         console.log(req.body.payload);
         res.send(200);
