@@ -10,6 +10,7 @@ app.use(express.bodyParser());
 
 app.post('/status', function(req, res) {
     console.log(req);
+    res.send(200);
 });
 
 http.createServer(app).listen(app.get('port'), function(){
