@@ -1,0 +1,7 @@
+language: node_js
+node_js:
+  - 0.10
+notifications:
+  webhooks:
+    urls:
+      - http://requestb.in/1lhzv7k1
