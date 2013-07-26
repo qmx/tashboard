@@ -4,5 +4,4 @@ node_js:
 notifications:
   webhooks:
     urls:
-      - http://requestb.in/1lhzv7k1
-      - http://tashboard.herokuapp.com/status
+      - http://api.tashboard.qmx.me/builds
