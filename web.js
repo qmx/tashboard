@@ -26,10 +26,11 @@ app.post('/status', function(req, res) {
         var repo = payload.repository.owner_name + '/' + payload.repository.name;
         var key = 'tashboard:statuses:' + repo;
         var url = payload.build_url;
+        var branch = payload.branch;
         var statusMessage = payload.status_message;
         var finishedAt = payload.finished_at;
         var status = payload.status;
-        client.hmset(key, {repo:repo, url:url, status:status, statusMessage:statusMessage, finishedAt:finishedAt}, function (err, reply) {
+        client.hmset(key, {repo:repo, branch:branch, url:url, status:status, statusMessage:statusMessage, finishedAt:finishedAt}, function (err, reply) {
             if(!err) {
                 res.send(200);
             } else {
