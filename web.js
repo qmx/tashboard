@@ -23,13 +23,13 @@ app.use(cors());
 app.post('/status', function(req, res) {
     if (req.headers.authorization === process.env.TRAVIS_AUTH_TOKEN) {
         var payload = JSON.parse(req.body.payload);
-        var repo = payload.repository.owner_name + ':' + payload.repository.name;
+        var repo = payload.repository.owner_name + '/' + payload.repository.name;
         var key = 'tashboard:statuses:' + repo;
         var url = payload.build_url;
         var statusMessage = payload.status_message;
         var finishedAt = payload.finished_at;
         var status = payload.status;
-        client.hmset(key, {url:url, status:status, statusMessage:statusMessage, finishedAt:finishedAt}, function (err, reply) {
+        client.hmset(key, {repo:repo, url:url, status:status, statusMessage:statusMessage, finishedAt:finishedAt}, function (err, reply) {
             if(!err) {
                 res.send(200);
             } else {
@@ -50,9 +50,9 @@ app.get('/status', function(req, res) {
         }
     }
     client.keys('tashboard:statuses:*', function(err, keys) {
-        async.reduce(keys, {}, function(memo, item, callback) {
+        async.reduce(keys, {repositories:[]}, function(memo, item, callback) {
             client.hgetall(item, function(err, reply) {
-                memo[item] = reply;
+                memo.repositories.push(reply);
                 callback(null, memo);
             });
         }, cb);
