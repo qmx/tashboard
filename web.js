@@ -18,6 +18,7 @@ app.set('port', process.env.PORT || 3000);
 app.use(express.favicon());
 app.use(express.logger('dev'));
 app.use(express.bodyParser());
+app.use(cors());
 
 app.post('/status', function(req, res) {
     if (req.headers.authorization === process.env.TRAVIS_AUTH_TOKEN) {
