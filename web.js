@@ -1,5 +1,7 @@
 var express = require('express'),
 redis = require('redis'),
+cors = require('cors'),
+async = require('async'),
 http = require('http');
 
 if (process.env.REDIS_URL) {
