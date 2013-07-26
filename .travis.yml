@@ -5,4 +5,4 @@ notifications:
   webhooks:
     urls:
       - http://requestb.in/1lhzv7k1
-      - http://tashboard.herokuapp.com
+      - http://tashboard.herokuapp.com/status
