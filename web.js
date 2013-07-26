@@ -20,10 +20,18 @@ app.use(express.bodyParser());
 app.post('/status', function(req, res) {
     if (req.headers.authorization === process.env.TRAVIS_AUTH_TOKEN) {
         var payload = JSON.parse(req.body.payload);
-        console.log('repository: ' + payload.repository.owner_name
-        + '/' + payload.repository.name + ': ' + payload.status_message
-        + ' at ' + payload.build_url);
-        res.send(200);
+        var repo = payload.repository.owner_name + ':' + payload.repository.name;
+        var key = 'tashboard:statuses' + repo;
+        var url = payload.build_url;
+        var statusMessage = payload.status_message;
+        var status = payload.status;
+        client.hset(key, {url:url, status:status, statusMessage:statusMessage}, function (err, reply) {
+            if(!err) {
+                res.send(200);
+            } else {
+                res.send(500);
+            }
+        });
     } else {
         res.send(403);
     }
