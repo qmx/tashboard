@@ -20,11 +20,11 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 app.use(cors());
 
-app.post('/status', function(req, res) {
+app.post('/builds', function(req, res) {
     if (req.headers.authorization === process.env.TRAVIS_AUTH_TOKEN) {
         var payload = JSON.parse(req.body.payload);
         var repo = payload.repository.owner_name + '/' + payload.repository.name;
-        var key = 'tashboard:statuses:' + repo;
+        var key = 'tashboard:builds:' + repo;
         var url = payload.build_url;
         var branch = payload.branch;
         var statusMessage = payload.status_message;
@@ -42,7 +42,7 @@ app.post('/status', function(req, res) {
     }
 });
 
-app.get('/status', function(req, res) {
+app.get('/builds', function(req, res) {
     function cb(err, reply) {
         if(!err) {
             res.json(reply);
@@ -50,7 +50,7 @@ app.get('/status', function(req, res) {
             res.send(500);
         }
     }
-    client.keys('tashboard:statuses:*', function(err, keys) {
+    client.keys('tashboard:builds:*', function(err, keys) {
         async.reduce(keys, {repositories:[]}, function(memo, item, callback) {
             client.hgetall(item, function(err, reply) {
                 memo.repositories.push(reply);
