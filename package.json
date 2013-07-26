@@ -1,0 +1,24 @@
+{
+  "name": "tashboard",
+  "version": "0.0.0",
+  "description": "Travis Dashboard",
+  "main": "web.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git://github.com/qmx/tashboard.git"
+  },
+  "keywords": [
+    "travis-ci",
+    "dashboard",
+    "status",
+    "ci"
+  ],
+  "author": "Douglas Campos",
+  "license": "BSD",
+  "bugs": {
+    "url": "https://github.com/qmx/tashboard/issues"
+  }
+}
