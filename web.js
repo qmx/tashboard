@@ -9,8 +9,13 @@ app.use(express.logger('dev'));
 app.use(express.bodyParser());
 
 app.post('/status', function(req, res) {
-    console.log(req);
-    res.send(200);
+    if (request.headers.authorization === process.env.TRAVIS_AUTH_TOKEN) {
+        console.log(req.body);
+        console.log(req.body.payload);
+        res.send(200);
+    } else {
+        res.send(403);
+    }
 });
 
 http.createServer(app).listen(app.get('port'), function(){
