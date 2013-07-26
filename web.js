@@ -41,6 +41,24 @@ app.post('/status', function(req, res) {
     }
 });
 
+app.get('/status', function(req, res) {
+    function cb(err, reply) {
+        if(!err) {
+            res.json(reply);
+        } else {
+            res.send(500);
+        }
+    }
+    client.keys('tashboard:statuses:*', function(err, keys) {
+        async.reduce(keys, {}, function(memo, item, callback) {
+            client.hgetall(item, function(err, reply) {
+                memo[item] = reply;
+                callback(null, memo);
+            });
+        }, cb);
+    });
+});
+
 http.createServer(app).listen(app.get('port'), function(){
     console.log('Express server listening on port ' + app.get('port'));
 });
